@@ -32,12 +32,7 @@ const navList = [
 const RedirectRouter = "/Recommend";
 
 function DashBoard(props) {
-  const [high] = useState(window.innerHeight);
   const [pathname, setPathName] = useState(window.location.hash.split("#")[1]);
-
-  useEffect(() => {
-    // console.log("aaaa");
-  });
 
   console.log(pathname);
   return (

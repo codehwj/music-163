@@ -7,7 +7,12 @@ Page({
     motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    test: "hhhh"
+  },
+  clickMe: function() {
+    console.log('点击了按钮');
+    wx.navigateTo({url: `../compoment/text/text`})
   },
   //事件处理函数
   bindViewTap: function() {
@@ -35,6 +40,8 @@ Page({
       wx.getUserInfo({
         success: res => {
           app.globalData.userInfo = res.userInfo
+          console.log(res);
+          
           this.setData({
             userInfo: res.userInfo,
             hasUserInfo: true
@@ -44,7 +51,6 @@ Page({
     }
   },
   getUserInfo: function(e) {
-    console.log(e)
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
       userInfo: e.detail.userInfo,

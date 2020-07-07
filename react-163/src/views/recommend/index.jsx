@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 // import { HashRouter, Route, Redirect } from "react-router-dom";
 
 function Recommend(props) {
-  const [count, setCount] = useState(0);
+  const [count] = useState(0);
 
   useEffect(() => {
-    console.log("aaa");
+    // console.log("aaa");
   });
-  return <div>哈哈哈{count}</div>;
+  return <div className="recommend">哈哈哈{count}</div>;
 }
 export default Recommend;

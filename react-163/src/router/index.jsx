@@ -1,17 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 // import { Provider } from 'react-redux'
-import { HashRouter, Route, Redirect } from "react-router-dom";
-import Recommend from "../views/recommend";
-import HotMusic from "../views/hotMusic";
-import Search from "../views/search";
+import { HashRouter, Route } from "react-router-dom";
+import DashBoard from "../views/dashBoard/dashBoard"
 
 function Routers() {
   return (
     <HashRouter>
-      <Route path="/Recommend" component={Recommend}></Route>
+      {/* <Route path="/Recommend" component={Recommend}></Route>
       <Route path="/HotMusic" component={HotMusic}></Route>
-      <Route path="/Search" component={Search}></Route>
-      {/* <Redirect to={Recommend}></Redirect> */}
+      <Route path="/Search" component={Search}></Route> */}
+      <Route component={DashBoard}></Route>
     </HashRouter>
   );
 }

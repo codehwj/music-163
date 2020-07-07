@@ -1,0 +1,17 @@
+.recommend .remd_tl {
+  position: relative;
+  height: 20px;
+  line-height: 20px;
+  text-align: left;
+  padding-left: 9px;
+}
+.recommend .remd_tl::after {
+  content: " ";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  margin-top: -9px;
+  width: 2px;
+  height: 16px;
+  background-color: #d33a31;
+}

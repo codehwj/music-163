@@ -5,6 +5,10 @@
   margin: 0 auto;
 }
 .dashBoard .nav {
+  position: fixed;
+  left: 0;
+  z-index: 100;
+  right: 0;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -46,4 +50,5 @@
 }
 .dashBoard .dashBody {
   height: calc(100% - 40px);
+  padding-top: 40px;
 }

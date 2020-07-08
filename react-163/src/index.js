@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'antd-mobile/dist/antd-mobile.css';
+import "@/common/css/global.css"
 
 ReactDOM.render(
   <React.StrictMode>

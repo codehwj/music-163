@@ -21,6 +21,17 @@
   position: relative;
   padding-bottom: 100%;
 }
+.remd_songs .remd_ul .remd_li .remd_img::after {
+  content: " ";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 20px;
+  z-index: 2;
+  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0));
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0));
+}
 .remd_songs .remd_ul .remd_li .remd_img .u_img {
   position: absolute;
   width: 100%;
@@ -51,4 +62,15 @@
   background-repeat: no-repeat;
   background-size: 11px 10px;
   text-shadow: 1px 0 0 rgba(0, 0, 0, 0.15);
+}
+.remd_songs .remd_ul .remd_li .remd_text {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  padding: 6px 2px 0 6px;
+  min-height: 30px;
+  line-height: 1.2;
+  font-size: 13px;
+  text-align: left;
 }

@@ -34,13 +34,13 @@ const RedirectRouter = "/Recommend";
 function DashBoard(props) {
   const [pathname, setPathName] = useState(window.location.hash.split("#")[1]);
   useEffect(() => {
-    console.log(pathname);
+    console.log();
   });
 
   return (
     <div className="dashBoard">
       {pathname === "/" && <Redirect to={RedirectRouter}></Redirect>}
-      <nav className="nav">
+      <nav className="nav f-bd">
         {navList.map((v, index) => (
           <div
             className={`navItem  ${pathname === v.path ? "active" : ""} ${

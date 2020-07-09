@@ -3,7 +3,7 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import "./dashBoard.css";
 
 import Recommend from "../recommend/recommend";
-import HotMusic from "../hotMusic";
+import HotMusic from "../hotMusic/hotMusic";
 import Search from "../search";
 
 const navList = [
@@ -29,7 +29,7 @@ const navList = [
     icon: "",
   },
 ];
-const RedirectRouter = "/Recommend";
+const RedirectRouter = "/HotMusic";
 
 function DashBoard(props) {
   const [pathname, setPathName] = useState(window.location.hash.split("#")[1]);
@@ -44,7 +44,7 @@ function DashBoard(props) {
         {navList.map((v, index) => (
           <div
             className={`navItem  ${pathname === v.path ? "active" : ""} ${
-              pathname === "/" && index === 0 ? "active" : ""
+              pathname === "/" && index === 1 ? "active" : ""
             }`}
             key={index}
             onClick={() => {

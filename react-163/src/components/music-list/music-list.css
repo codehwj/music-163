@@ -6,6 +6,22 @@
   color: #333;
   padding-left: 10px;
 }
+.m-songs .songsItem .sgfl {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  width: 40px;
+  font-size: 17px;
+  color: #999;
+  margin-left: -10px;
+  display: flex;
+}
+.m-songs .songsItem .sgfl.sgfl-cred {
+  color: #df3436;
+}
 .m-songs .songsItem .songfr {
   position: relative;
   flex: 1 1 auto;

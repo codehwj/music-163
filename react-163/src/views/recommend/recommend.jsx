@@ -14,9 +14,9 @@ function Recommend(props) {
    * @date 2020-07-07
    */
   const getPersonalized = async () => {
-    let { success, response } = await getRequest("/personalized");
+    let { success, response } = await getRequest("/personalized?limit=6");
     if (success) {
-      setRecommentSons(response.slice(0, 6));
+      setRecommentSons(response);
     }
   };
   const getNewSong = async () => {
@@ -45,7 +45,7 @@ function Recommend(props) {
       </div>
       <h2 className="remd_tl">最新音乐</h2>
       <div className="remd_songs">
-        <MusicList newSongs={newSongs}></MusicList>
+        <MusicList newSongs={newSongs} ></MusicList>
       </div>
     </div>
   );

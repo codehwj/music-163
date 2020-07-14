@@ -1,0 +1,68 @@
+.search .m-input {
+  padding: 15px 10px;
+}
+.search .m-input .inputcover {
+  position: relative;
+  width: 100%;
+  height: 30px;
+  padding: 0 30px;
+  box-sizing: border-box;
+  background: #ebecec;
+  border-radius: 30px;
+  color: #c9c9c9;
+}
+.search .m-input .inputcover .icon {
+  position: absolute;
+  margin: 0 8px;
+  vertical-align: middle;
+  width: 13px;
+  height: 13px;
+}
+.search .m-input .inputcover .icon.search-icon {
+  left: 0;
+  top: 9px;
+}
+.search .m-input .inputcover .icon.close-icon {
+  right: 0;
+  top: 9px;
+}
+.search .m-input .inputcover .input {
+  width: 100%;
+  height: 30px;
+  line-height: 18px;
+  background: rgba(0, 0, 0, 0);
+  font-size: 14px;
+  color: #333;
+}
+.search .m-input .inputcover .input::-webkit-input-placeholder {
+  color: #c9c9c9;
+}
+.search .m-hotlist {
+  padding: 15px 10px 0;
+}
+.search .m-hotlist .title {
+  font-size: 12px;
+  line-height: 12px;
+  color: #666;
+  font-weight: 400;
+}
+.search .m-hotlist .list {
+  margin: 10px 0 7px;
+}
+.search .m-hotlist .list .item {
+  display: inline-block;
+  height: 32px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  padding: 0 14px;
+  font-size: 14px;
+  line-height: 32px;
+  color: #333;
+}
+.search .m-hotlist .list .item::after {
+  border-color: #d3d4da;
+  border-radius: 60px;
+}
+.search .m-hotlist .list .f-bd-full:after {
+  border-width: 1px;
+}

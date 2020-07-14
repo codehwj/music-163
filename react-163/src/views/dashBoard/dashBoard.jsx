@@ -4,7 +4,7 @@ import "./dashBoard.css";
 
 import Recommend from "../recommend/recommend";
 import HotMusic from "../hotMusic/hotMusic";
-import Search from "../search";
+import Search from "../search/search";
 
 const navList = [
   {
@@ -29,7 +29,7 @@ const navList = [
     icon: "",
   },
 ];
-const RedirectRouter = "/HotMusic";
+const RedirectRouter = "/Search";
 
 function DashBoard(props) {
   const [pathname, setPathName] = useState(window.location.hash.split("#")[1]);
@@ -44,7 +44,7 @@ function DashBoard(props) {
         {navList.map((v, index) => (
           <div
             className={`navItem  ${pathname === v.path ? "active" : ""} ${
-              pathname === "/" && index === 1 ? "active" : ""
+              pathname === "/" && index === 2 ? "active" : ""
             }`}
             key={index}
             onClick={() => {

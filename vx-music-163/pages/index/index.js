@@ -7,12 +7,36 @@ Page({
     motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    test: "hhhh"
+    navList: [{
+      title: "推荐音乐",
+      path: "recommend",
+      hide: false,
+      icon: "",
+    },
+    {
+      title: "热歌榜",
+      path: "hotMusic",
+      hide: false,
+      icon: "",
+    },
+    {
+      title: "搜索",
+      path: "search",
+      hide: false,
+      icon: "",
+    }],
+    navIndex: 0,
+    navActivePath: "recommend"
   },
   clickMe: function() {
-    console.log('点击了按钮');
     wx.navigateTo({url: `../compoment/text/text`})
+  },
+  switchNav(e) {
+    console.log(e.currentTarget.dataset["item"].path);
+    this.setData({
+      navIndex: e.currentTarget.dataset["index"],
+      navActivePath: e.currentTarget.dataset["item"].path
+    })
   },
   //事件处理函数
   bindViewTap: function() {

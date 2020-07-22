@@ -1,0 +1,4 @@
+<!--pages/compoment/recommend/recommend.wxml-->
+<template name="recommend">
+	<text>pages/compoment/recommend/recommend.wxml</text>
+</template>

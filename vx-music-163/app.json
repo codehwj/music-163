@@ -2,13 +2,15 @@
   "pages": [
     "pages/index/index",
     "pages/logs/logs",
-    "pages/compoment/text/text"
+    "pages/compoment/recommend/recommend",
+    "pages/compoment/hotMusic/hotMusic",
+    "pages/compoment/search/search"
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle": "black"
+    "navigationBarBackgroundColor": "#d43c33",
+    "navigationBarTitleText": "node网易云音乐",
+    "navigationBarTextStyle": "white"
   },
   "style": "v2",
   "sitemapLocation": "sitemap.json"

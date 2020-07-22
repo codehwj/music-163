@@ -19,6 +19,7 @@ function Search() {
   const searchOnChange = (e) => {
     e.persist();
     if (e.type) {
+      console.log(e.target.value);
       setKeyword(e.target.value);
     }
   };
@@ -38,6 +39,7 @@ function Search() {
           <input
             type="text"
             name="search"
+            autocomplete="off"
             value={keyword}
             className="input"
             placeholder="搜索歌曲、歌手、专辑"
@@ -49,7 +51,7 @@ function Search() {
               size="xxs"
               className="icon close-icon"
               onClick={() => {
-                setKeyword("")
+                setKeyword("");
               }}
             />
           )}

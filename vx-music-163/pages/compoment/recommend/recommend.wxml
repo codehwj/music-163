@@ -1,4 +1,13 @@
 <!--pages/compoment/recommend/recommend.wxml-->
 <template name="recommend">
-	<text>pages/compoment/recommend/recommend.wxml</text>
+	<view className="recommend">
+      <h2 className="remd_tl">推荐歌单</h2>
+      <view className="remd_songs">
+        <song-list recommentSons="{{recommendData}}"></song-list>
+      </view>
+      <h2 className="remd_tl">最新音乐</h2>
+      <view className="remd_songs">
+        <!-- <MusicList newSongs={newSongs} ></MusicList> -->
+      </view>
+    </view>
 </template>

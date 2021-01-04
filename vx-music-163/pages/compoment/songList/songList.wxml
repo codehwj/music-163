@@ -1,0 +1,16 @@
+<!--pages/compoment/songList/songList.wxml-->
+<template name="songlist">
+	<view className="remd_songs">
+		<ul className="remd_ul">
+			<li className="remd_li" wx:for="{{recommentSons}}" wx:key="index" wx:for-item="v">
+				<view className="remd_img">
+					<img className="u_img" src="{{v.picUrl}}" alt="{{v.name}}" />
+					<span className="remd_lnum u-earp">
+						{{unitConverter(v.playCount)}}
+					</span>
+				</view>
+				<p className="remd_text">{{v.name}}</p>
+			</li>
+		</ul>
+	</view>
+</template>

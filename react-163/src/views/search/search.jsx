@@ -36,10 +36,10 @@ function Search() {
       <div className="m-input">
         <div className="inputcover">
           <Icon type="search" size="xxs" className="icon search-icon" />
+          {/* autocomplete="off" */}
           <input
             type="text"
             name="search"
-            autocomplete="off"
             value={keyword}
             className="input"
             placeholder="搜索歌曲、歌手、专辑"

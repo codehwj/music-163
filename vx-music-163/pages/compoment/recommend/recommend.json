@@ -1,3 +1,6 @@
 {
-  "usingComponents": {}
+  "component": true,
+  "usingComponents": {
+    "song-list": "../songList/songList"
+  }
 }

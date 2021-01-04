@@ -50,9 +50,6 @@
   background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0));
   background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0));
 }
-.remd_songs .remd_ul .remd_li .remd_img .u-earp {
-  background-image: url("../../common/image/earp.svg");
-}
 .remd_songs .remd_ul .remd_li .remd_img .remd_lnum {
   position: absolute;
   right: 5px;
@@ -65,7 +62,6 @@
   background-repeat: no-repeat;
   background-size: 11px 10px;
   text-shadow: 1px 0 0 rgba(0, 0, 0, 0.15);
-  line-height: 1.5;
 }
 .remd_songs .remd_ul .remd_li .remd_text {
   display: -webkit-box;

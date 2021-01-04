@@ -56,7 +56,8 @@ function DashBoard(props) {
           </div>
         ))}
       </nav>
-      <div className="dashBody">
+      <div className="placeholder-nav"></div>
+      <div className="dashBody scrollY">
         <div style={{ position: "relative", height: "100%", width: "100%" }}>
           <Switch>
             {navList.map((v) => (

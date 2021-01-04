@@ -7,12 +7,15 @@ import "./search.css";
 
 function Search() {
   const [hots, setHots] = useState([]);
-  const [keyword, setKeyword] = useState("");
+  const [keyword, setKeyword] = useState("1122");
   const history = localStorage.getItem("historyList");
+  // 历史列表
   const [historyList, setHistoryList] = useReducer((state, action) => {
     localStorage.setItem("historyList", JSON.stringify(action));
     return action
   }, history ? JSON.parse(history) : []);
+  const [allMatchList, setAllMatchList] = useState([])
+  const [multimatchResult, setMultimatchResult] = useState({})
   let useDebounceValue = useDebounce(keyword, 3000);
 
   const getSearchHot = () => {
@@ -30,38 +33,48 @@ function Search() {
       searchMusicListByKeyword(e.target.value);
     }
   };
-  const clickHotItem = ({ first }) => {
-    console.log(first);
-    searchMusicListByKeyword(first)
+  const clickListItem = (item) => {
+    console.log(item);
+    setKeyword(item.keyword);
+    let newHistory = historyList.filter(chunk => chunk.first !== item.keyword);
+    newHistory.unshift({first: item.keyword});
+    setHistoryList(newHistory)
+    getSearchMultimatchList(item.keyword);
   };
   const closeCurrHistory = (index) => {
     let newHistory = historyList.slice(0);
-    let a = newHistory.splice(index, index + 1);
-    console.log(a);
+    newHistory.splice(index, index + 1);
     setHistoryList(newHistory);
   }
 
   const searchMusicListByKeyword = (keyword) => {
+    console.log(keyword);
     if (keyword) {
       setKeyword(keyword);
-      let newHistory = historyList.filter(item => item.first !== keyword);
-      newHistory.unshift({first: keyword});
-      // setHistoryList(newHistory);
       setSearchResult(keyword)
     } else {
+      setAllMatchList([])
       setKeyword("");
     }
   }
 
+
   const setSearchResult = async (keyword)=> {
-    let {success, response} = await getRequest(`/search/suggest?keywords=${keyword}`);
+    let {success, response} = await getRequest(`/search/suggest?type=mobile&keywords=${keyword}`);
+    if (success) {
+      response.allMatch && response.allMatch.length && setAllMatchList(response.allMatch)
+    }
+  }
+  const getSearchMultimatchList = async () => {
+    let {success, response} = await getRequest(`/search/multimatch?keywords=${keyword}`);
     if (success) {
       console.log(response);
+      setMultimatchResult(response)
     }
   }
 
   useEffect(() => {
-    setSearchResult(useDebounceValue)
+    useDebounceValue && setSearchResult(useDebounceValue)
     if (hots && !hots.length) {
       getSearchHot();
     }
@@ -93,54 +106,61 @@ function Search() {
           )}
         </div>
       </div>
-      <div className="m-default">
-        <section className="m-hotlist">
-          <h3 className="title">热门搜索</h3>
-          <ul className="list">
-            {hots.length
-              ? hots.map((item, index) => (
-                <li
-                  className="item f-db f-bd-full"
-                  key={index}
-                  onClick={() => clickHotItem(item)}
-                >
-                  {item.first}
-                </li>
-              ))
-              : null}
-          </ul>
-        </section>
-        <section className="m-history">
-          <ul className="list">
-            {historyList.map((item, index) => (
-              <li className="item" key={`${item}-${index}`}>
-                <Icon type="search" color="#ccc" className="u-svg u-svg-histy" size="sm" />
-                <div className="histyr f-bd f-bd-btm">
-                  <span className="link f-thide">{item.first}</span>
-                  <figure className="close" onClick={() => closeCurrHistory(index)}>
-                    <Icon type="cross" color="#ccc" />
-                  </figure>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </section>
-      </div>
+     {!keyword && <DefaultList hots={hots} list={historyList} closeCurrHistory={closeCurrHistory} clickListItem={clickListItem}></DefaultList>}
+     {keyword && <SuggestList keyword={keyword} list={allMatchList} clickListItem={clickListItem} ></SuggestList>}
     </div>
   );
 }
 
+function DefaultList({hots, list, closeCurrHistory, clickListItem}) {
+  return (
+    <div className="m-default">
+    <section className="m-hotlist">
+      <h3 className="title">热门搜索</h3>
+      <ul className="list">
+        {hots.length
+          ? hots.map((item, index) => (
+            <li
+              className="item f-db f-bd-full"
+              key={index}
+              onClick={() => clickListItem(item)}
+            >
+              {item.first}
+            </li>
+          ))
+          : null}
+      </ul>
+    </section>
+    <section className="m-history">
+      <ul className="list">
+        {list && list.length && list.map((item, index) => (
+          <li className="item" key={`${item}-${index}`}>
+            <Icon type="search" color="#ccc" className="u-svg u-svg-histy" size="sm" />
+            <div className="histyr f-bd f-bd-btm">
+              <span className="link f-thide">{item.first}</span>
+              <figure className="close" onClick={() => closeCurrHistory(index)}>
+                <Icon type="cross" color="#ccc" />
+              </figure>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </section>
+  </div>
+  )
+}
 
-
-function SuggestList(params) {
+function SuggestList({keyword, list = [{keyword: "1122"}, {keyword: 3344}, {keyword: 5566}], clickListItem = () => {}}) {
   return (
     <section className="m-recom">
-      <h3 className="title f-bd f-bd-btm f-thide">11</h3>
+      <h3 className="title f-bd f-bd-btm f-thide">搜索“{keyword}”</h3>
       <ul>
-        <li className="recomitem">
-          <i className="u-svg u-svg-search"></i>
-          <span className="f-bd f-bd-btm f-thide"></span>
-        </li>
+        {list && list.length && list.map((item, index) => (
+          <li className="recomitem" key={item.keyword} onClick={() => clickListItem(item)}>
+            <Icon type="search" size="xxs" color="#ccc" className="u-svg u-svg-search"></Icon>
+            <span className="f-bd f-bd-btm f-thide">{item.keyword}</span>
+          </li>
+        ))}
       </ul>
     </section>
   )

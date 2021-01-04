@@ -66,3 +66,33 @@
 .search .m-hotlist .list .f-bd-full:after {
   border-width: 1px;
 }
+.search .m-history .list .item {
+  display: flex;
+  align-items: center;
+  height: 45px;
+}
+.search .m-history .list .item .u-svg-histy {
+  width: 15px;
+  height: 15px;
+}
+.search .m-history .list .item .u-svg-histy.u-svg-histy {
+  margin: 0 10px;
+}
+.search .m-history .list .item .histyr,
+.search .m-history .list .item .link {
+  flex: 1;
+  width: 1%;
+}
+.search .m-history .list .item .histyr {
+  display: flex;
+  align-items: center;
+  height: 45px;
+}
+.search .m-history .list .item figure {
+  margin: 0;
+}
+.search .m-history .list .item .close {
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+}

@@ -21,7 +21,7 @@ const SongList = ({ recommentSons }) => {
   };
   return (
     <div className="remd_songs">
-      {recommentSons.length ? (
+      {recommentSons.length >= 1 ? (
         <ul className="remd_ul">
           {recommentSons.map((v, index) => (
             <li className="remd_li" key={index}>

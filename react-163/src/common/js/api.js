@@ -52,7 +52,7 @@ export async function getRequestWithData(url, params = {}) {
       params: params,
     }).then((response) => {
       if (response.status === 200 && response.data.code === 200) {
-        resolve(response.data);
+        resolve({ success: true, response: response.data});
       }
     })
       .catch((err) => {

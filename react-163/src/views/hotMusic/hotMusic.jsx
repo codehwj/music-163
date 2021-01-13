@@ -8,42 +8,58 @@ function HotMusic() {
   const [hotItem, setHotItem] = useState([]);
 
   const getToplist = () => {
-    getRequestWithData(`/toplist/detail`).then(({ code, list }) => {
+    getRequestWithData(`/toplist`).then(({ success, response: {code, list} }) => {
       if (code === 200) {
-        console.log(list);
         const item = list.find((item) => item.name.includes("热歌"));
         setHotItem(item);
-        // getPlaylistDetail(`id=${item.id}`);
         getPlaylistDetail({query: `id=${item.id}`});
       }
     });
   };
 
+  // 获取榜单列表trackids
   const getPlaylistDetail = ({ query }) => {
     getRequestWithData(`/playlist/detail?${query}`).then(
-      ({ code, playlist }) => {
+      ({ success, response: {code, playlist} }) => {
         if (code === 200) {
-          setHotMusic(playlist.tracks.slice(0, 20));
+          // setHotMusic(playlist.tracks.slice(0, 20));
+          getSongDetailByTrackIds(playlist.trackIds);
         }
       }
     );
   };
+
+  const getSongDetailByTrackIds = async (trackIds) => {
+    if (!trackIds || trackIds.length === 0) return;
+    let ids = [];
+    for (const item of trackIds) {
+      if (ids.length >= 20) {
+        break;
+      }
+      ids.push(item.id)
+    }
+    let { success, response } = await getRequestWithData(`/song/detail?ids=${ids.join(",")}`)
+    if (success) {
+      setHotMusic(response.songs);
+    }
+  };
+
   const formatDate = (date) => {
     let time = new Date(parseInt(date));
     // let y = time.getFullYear();  //年
     let m = time.getMonth() + 1;  //月
-    if(m < 10){ m = '0' + m }
+    if (m < 10) { m = '0' + m }
     let d = time.getDate();  //日
-    if(d < 10){ d = '0' + d }
+    if (d < 10) { d = '0' + d }
     let h = time.getHours();  //时
-    if(h < 10){ h = '0' + h }
+    if (h < 10) { h = '0' + h }
     let mm = time.getMinutes();  //分
-    if(mm < 10){ mm = '0' + mm }
+    if (mm < 10) { mm = '0' + mm }
     let s = time.getSeconds();  //秒
-    if(s < 10){ s = '0' + s }
+    if (s < 10) { s = '0' + s }
     // let timeStr = y+"-"+m+"-"+d+" "+h+":"+mm+":"+s;
     return `${m}月${d}日`;
-}
+  }
 
   useEffect(() => {
     getToplist();

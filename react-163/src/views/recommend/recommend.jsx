@@ -39,14 +39,22 @@ function Recommend(props) {
   }, []);
   return (
     <div className="recommend">
-      <h2 className="remd_tl">推荐歌单</h2>
-      <div className="remd_songs">
-        <SongList recommentSons={recommentSons}></SongList>
-      </div>
-      <h2 className="remd_tl">最新音乐</h2>
-      <div className="remd_songs">
-        <MusicList newSongs={newSongs} ></MusicList>
-      </div>
+      {
+        recommentSons.length > 0 && <div>
+          <h2 className="remd_tl">推荐歌单</h2>
+          <div className="remd_songs">
+            <SongList recommentSons={recommentSons}></SongList>
+          </div>
+        </div>
+      }
+      {
+        newSongs.length > 0 && <div>
+          <h2 className="remd_tl">最新音乐</h2>
+          <div className="remd_songs">
+            <MusicList newSongs={newSongs} ></MusicList>
+          </div>
+        </div>
+      }
     </div>
   );
 }

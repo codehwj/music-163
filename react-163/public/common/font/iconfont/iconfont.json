@@ -1,0 +1,23 @@
+{
+  "id": "1170345",
+  "name": "my-icon-font",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "我的字体图标库",
+  "glyphs": [
+    {
+      "icon_id": "14112241",
+      "name": "time",
+      "font_class": "time",
+      "unicode": "e61d",
+      "unicode_decimal": 58909
+    },
+    {
+      "icon_id": "15218140",
+      "name": "close",
+      "font_class": "close",
+      "unicode": "e622",
+      "unicode_decimal": 58914
+    }
+  ]
+}

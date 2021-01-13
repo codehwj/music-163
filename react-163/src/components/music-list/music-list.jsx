@@ -5,7 +5,6 @@ const padLeftStr = (index) => {
 };
 const MusicList = ({ newSongs, showIndex = false, type = "" }) => {
   const getArName = (v) => {
-    console.log(v);
     let strs = [];
     if (type === "") {
       v.song.artists.map((item) => strs.push(item.name));
@@ -21,7 +20,7 @@ const MusicList = ({ newSongs, showIndex = false, type = "" }) => {
 
   return (
     <div className="m-songs">
-      {newSongs.length
+      {newSongs.length >= 1
         ? newSongs.map((v, index) => (
             <div className="songsItem" key={index}>
               {showIndex ? (
@@ -39,7 +38,7 @@ const MusicList = ({ newSongs, showIndex = false, type = "" }) => {
                     </span>
                   </div>
                   <div className="songinfo">
-                    <i className="u-hmsprt songhot"></i>
+                    {v.song && v.song.album.status < 3 ? <i className="u-hmsprt songhot"></i>: ""}
                     {getArName(v)}
                   </div>
                 </div>

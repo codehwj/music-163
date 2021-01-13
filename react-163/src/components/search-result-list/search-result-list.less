@@ -1,0 +1,85 @@
+.m-songs {
+
+
+  .songsItem {
+    display: flex;
+    color: #333;
+    padding-left: 10px;
+
+    .sgfl {
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      width: 40px;
+      font-size: 17px;
+      color: #999;
+      margin-left: -10px;
+      display: flex;
+
+      &.sgfl-cred {
+        color: #df3436;
+      }
+    }
+
+    .songfr {
+      position: relative;
+      flex: 1 1 auto;
+      display: flex;
+
+      .songchfl {
+        padding: 6px 0;
+        width: 0;
+        color: #333;
+        flex: 1 1 auto;
+
+        .songtl {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          word-break: normal;
+          font-size: 17px;
+        }
+
+        .songinfo {
+          font-size: 12px;
+          color: #888;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          word-break: normal;
+
+          // .u-hmsprt {
+          //   background: url("http://s3.music.126.net/mobile-new/img/index_icon_2x.png?5207a28c3767992ca4bb6d4887c74880=") no-repeat;
+          //   background-size: 166px 97px;
+          // }
+          .songhot {
+            display: inline-block;
+            width: 12px;
+            height: 8px;
+            margin-right: 4px;
+          }
+        }
+      }
+
+      .sgchfr {
+        display: flex;
+        align-items: center;
+        padding: 0 10px;
+        // .u-hmsprt {
+        //   background: url("http://s3.music.126.net/mobile-new/img/index_icon_2x.png?5207a28c3767992ca4bb6d4887c74880=") no-repeat;
+        //   background-size: 166px 97px;
+        // }
+        .songsPlay {
+          display: inline-block;
+          width: 22px;
+          height: 22px;
+          background-position: -24px 0;
+        }
+      }
+
+    }
+  }
+}

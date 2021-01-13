@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useReducer } from "react";
+import React, { useState, useEffect, useReducer, useRef } from "react";
 import { getRequest } from "@/common/js/api";
-import { Icon } from "antd-mobile";
+import { Icon, PullToRefresh, Toast } from "antd-mobile";
 // import { throttle } from "@/utils/common";
 import SearchResultList from "@/components/search-result-list/search-result-list";
 import useDebounce from "../../hooks/useDebounce"
@@ -15,8 +15,17 @@ function Search() {
     localStorage.setItem("historyList", JSON.stringify(action));
     return action
   }, history ? JSON.parse(history) : []);
+  // 搜索结果
   const [allMatchList, setAllMatchList] = useState([])
-  const [multimatchResult, setMultimatchResult] = useState({})
+  // 关键词搜索结果
+  const [multimatchSongs, setMultimatchSongs] = useState([])
+  // 搜索分页
+  const [offset, setOffset] = useState(0);
+  // 是否还有更多
+  const [hasMore, setHasMore] = useState(true);
+  // useRef
+  const keywordDom = useRef(1);
+  
   let useDebounceValue = useDebounce(keyword, 3000);
 
   const getSearchHot = () => {
@@ -28,14 +37,19 @@ function Search() {
   };
 
   // 搜索内容改变
-  const searchOnChange = (e) => {
+  const searchOnChange = async (e) => {
     e.persist();
-    setMultimatchResult({});
+    setMultimatchSongs([]);
     if (e.type === "change") {
       let value = e.target.value;
+      console.log(value);
       searchMusicListByKeyword(value);
     }
   };
+  const multimatchInputChange = async (e) => {
+    await searchOnChange(e);
+    keywordDom.current.focus();
+  }
   // 搜索列表点击
   const clickListItem = (item) => {
     let currKeyword = item.keyword || item.first;
@@ -52,13 +66,13 @@ function Search() {
   }
 
   const searchMusicListByKeyword = (keyword) => {
+    setMultimatchSongs([]);
     if (keyword) {
       setKeyword(keyword);
       setSearchResult(keyword)
     } else {
       setAllMatchList([])
       setKeyword("");
-      setMultimatchResult({});
     }
   }
 
@@ -70,10 +84,15 @@ function Search() {
     }
   }
   const getSearchMultimatchList = async (keyword) => {
-    setMultimatchResult({})
-    let { success, response } = await getRequest(`/search?keywords=${keyword}`);
+    let { success, response } = await getRequest(`/search?keywords=${keyword}&limit=30&offset=${offset * 30}`);
     if (success) {
-      setMultimatchResult(response);
+      let newMultimatchSongs = multimatchSongs.slice(0);
+      setMultimatchSongs(newMultimatchSongs.concat(response.songs));
+      setHasMore(response.hasMore);
+      if (response.hasMore) {
+        setOffset(offset + 1);
+      }
+      return response;
     }
   }
 
@@ -82,40 +101,43 @@ function Search() {
     if (hots && !hots.length) {
       getSearchHot();
     }
-    // if (Object.keys(multimatchResult).length === 0) {
-    //   getSearchMultimatchList(keyword);
-    // }
   }, [useDebounceValue, hots]);
 
   return (
+
     <div className="search">
-      <div className="m-input">
-        <div className="inputcover">
-          <Icon type="search" size="xxs" className="icon search-icon" />
-          <input
-            type="text"
-            name="search"
-            autocomplete="off"
-            value={keyword}
-            className="input"
-            placeholder="搜索歌曲、歌手、专辑"
-            onChange={searchOnChange}
-          />
-          {keyword && (
-            <Icon
-              type="cross-circle-o"
-              size="xxs"
-              className="icon close-icon"
-              onClick={() => {
-                searchMusicListByKeyword("");
-              }}
-            />
-          )}
-        </div>
-      </div>
-      {!keyword && Object.keys(multimatchResult).length === 0 && <DefaultList hots={hots} list={historyList} closeCurrHistory={closeCurrHistory} clickListItem={clickListItem}></DefaultList>}
-      {keyword && Object.keys(multimatchResult).length === 0 && <SuggestList keyword={keyword} list={allMatchList} clickListItem={clickListItem} ></SuggestList>}
-      {keyword && Object.keys(multimatchResult).length >= 1 && <ResultList keyword={keyword} result={multimatchResult} ></ResultList>}
+      {keyword && multimatchSongs.length > 0 ?
+        <ResultList keyword={keyword} songs={multimatchSongs} hasMore={hasMore} getSearchMultimatchList={getSearchMultimatchList} multimatchInputChange={multimatchInputChange} searchMusicListByKeyword={searchMusicListByKeyword}></ResultList>:
+        <div className="search-body">
+          <div className="m-input">
+            <div className="inputcover">
+              <Icon type="search" size="xxs" className="icon search-icon" />
+              <input
+                type="text"
+                name="search"
+                autoComplete="off"
+                value={keyword}
+                ref={keywordDom}
+                className="input"
+                placeholder="搜索歌曲、歌手、专辑"
+                onChange={searchOnChange}
+              />
+              {keyword && (
+                <Icon
+                  type="cross-circle-o"
+                  size="xxs"
+                  className="icon close-icon"
+                  onClick={() => {
+                    searchMusicListByKeyword("");
+                  }}
+                />
+              )}
+            </div>
+          </div>
+          {!keyword && multimatchSongs.length === 0 && <DefaultList hots={hots} list={historyList} closeCurrHistory={closeCurrHistory} clickListItem={clickListItem}></DefaultList>}
+          {keyword && multimatchSongs.length === 0 && <SuggestList keyword={keyword} list={allMatchList} clickListItem={clickListItem} ></SuggestList>}
+
+        </div> }
     </div>
   );
 }
@@ -147,7 +169,7 @@ function DefaultList({ hots, list, closeCurrHistory, clickListItem }) {
               <i className="iconfont u-svg u-svg-histy">&#xe61d;</i>
               <div className="histyr f-bd f-bd-btm">
                 <span className="link f-thide ellipsis">{item.first}</span>
-                <figure className="close" onClick={(e) => {e.nativeEvent.stopImmediatePropagation();e.stopPropagation(); closeCurrHistory(index)}}>
+                <figure className="close" onClick={(e) => { e.nativeEvent.stopImmediatePropagation(); e.stopPropagation(); closeCurrHistory(index) }}>
                   <i className="iconfont">&#xe622;</i>
                 </figure>
               </div>
@@ -160,9 +182,10 @@ function DefaultList({ hots, list, closeCurrHistory, clickListItem }) {
 }
 
 function SuggestList({ keyword, list = [{ keyword: "1122" }, { keyword: 3344 }, { keyword: 5566 }], clickListItem = () => { } }) {
+
   return (
     <section className="m-recom">
-      <h3 className="title f-bd f-bd-btm f-thide" onClick={() => clickListItem({keyword: keyword})}>搜索“{keyword}”</h3>
+      <h3 className="title f-bd f-bd-btm f-thide" onClick={() => clickListItem({ keyword: keyword })}>搜索“{keyword}”</h3>
       <ul>
         {list && list.length >= 1 && list.map((item, index) => (
           <li className="recomitem" key={item.keyword} onClick={() => clickListItem(item)}>
@@ -175,12 +198,55 @@ function SuggestList({ keyword, list = [{ keyword: "1122" }, { keyword: 3344 }, 
   )
 }
 
-function ResultList({result, keyword}) {
-  if (!result || Object.keys(result).length === 0) return null;
+function ResultList({ songs = [], keyword, hasMore, getSearchMultimatchList, multimatchInputChange, searchMusicListByKeyword }) {
+  // 是否显示刷新状态
+  const [refreshing, setRefreshing] = useState(false);
   return (
-    <div className="remd_songs">
-      <SearchResultList songs={result.songs} keyword={keyword}></SearchResultList>
-    </div>
+    <PullToRefresh
+      damping={60}
+      style={{
+        height: document.body.clientHeight - 40,
+        overflow: 'auto',
+      }}
+      indicator={{ deactivate: '上拉可以刷新' }}
+      direction={'up'}
+      refreshing={refreshing}
+      onRefresh={async () => {
+        if (hasMore) {
+          setRefreshing(true)
+          await getSearchMultimatchList(keyword);
+          setRefreshing(false)
+        } else {
+          Toast.info('已经是最后一页了 !!!', 1);
+        }
+      }}
+    >
+      <div className="remd_songs">
+        <div className="m-input">
+          <div className="inputcover">
+            <Icon type="search" size="xxs" className="icon search-icon" />
+            <input
+              type="text"
+              name="search"
+              autoComplete="off"
+              value={keyword}
+              className="input"
+              placeholder="搜索歌曲、歌手、专辑"
+              onChange={multimatchInputChange}
+            />
+            {keyword && (
+              <Icon
+                type="cross-circle-o"
+                size="xxs"
+                className="icon close-icon"
+                onClick={() => searchMusicListByKeyword("")}
+              />
+            )}
+          </div>
+        </div>
+        <SearchResultList songs={songs} keyword={keyword}></SearchResultList>
+      </div>
+    </PullToRefresh>
   )
 }
 

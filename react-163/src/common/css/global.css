@@ -1,4 +1,4 @@
-.f-bd::after {
+.f-bd:after {
   position: absolute;
   z-index: 2;
   content: "";
@@ -12,12 +12,36 @@
   -ms-transform-origin: top left;
   transform-origin: top left;
   border: 0 solid rgba(0, 0, 0, 0.1);
-  border-color: #ccc;
-  z-index: 0;
+}
+.f-bd-btm:after {
   border-bottom-width: 1px;
-  transform: scale(0.333333);
-  width: 300%;
-  height: 300%;
+}
+@media screen and (-webkit-min-device-pixel-ratio: 3) {
+  .f-bd:after {
+    width: 300%;
+    height: 300%;
+    -webkit-transform: scale(0.333333);
+    -ms-transform: scale(0.333333);
+    transform: scale(0.333333);
+  }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+  .f-bd:after {
+    width: 200%;
+    height: 200%;
+    -webkit-transform: scale(0.5);
+    -ms-transform: scale(0.5);
+    transform: scale(0.5);
+  }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 1.5) {
+  .f-bd:after {
+    width: 150%;
+    height: 150%;
+    -webkit-transform: scale(0.666666);
+    -ms-transform: scale(0.666666);
+    transform: scale(0.666666);
+  }
 }
 .f-db {
   position: relative;
@@ -65,4 +89,5 @@
 }
 i {
   color: #ccc;
+  font-size: 14px;
 }

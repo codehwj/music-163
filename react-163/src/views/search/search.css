@@ -1,3 +1,6 @@
+.search .search-body {
+  height: 100%;
+}
 .search .m-input {
   padding: 15px 10px;
 }
@@ -87,6 +90,7 @@
   display: flex;
   align-items: center;
   height: 45px;
+  position: relative;
 }
 .search .m-history .list .item figure {
   margin: 0;
